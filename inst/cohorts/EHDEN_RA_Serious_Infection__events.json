@@ -1,0 +1,1045 @@
+{
+  "ExpressionLimit": {"Type": "All"},
+  "CollapseSettings": {
+    "CollapseType": "ERA",
+    "EraPad": 90
+  },
+  "CensorWindow": {
+    "StartDate": null,
+    "EndDate": null
+  },
+  "ConceptSets": [
+    {
+      "expression": {"items": [
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 262,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "ERIP",
+            "VOCABULARY_ID": "Visit",
+            "CONCEPT_NAME": "Emergency Room and Inpatient Visit",
+            "DOMAIN_ID": "Visit",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Visit",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 9203,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "ER",
+            "VOCABULARY_ID": "Visit",
+            "CONCEPT_NAME": "Emergency Room Visit",
+            "DOMAIN_ID": "Visit",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Visit",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 9201,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "IP",
+            "VOCABULARY_ID": "Visit",
+            "CONCEPT_NAME": "Inpatient Visit",
+            "DOMAIN_ID": "Visit",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Visit",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        }
+      ]},
+      "name": "[EHDEN Studyathon] Inpatient or ER visit",
+      "id": 8
+    },
+    {
+      "expression": {"items": [
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4326255,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "75100008",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Abdominal abscess",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 193522,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "79411002",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Acute prostatitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4324289,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "70884002",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Allergic encephalitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4176250,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "50776006",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Allergic encephalomyelitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4094215,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "26006005",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Allergic gastroenteritis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 192674,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "266451002",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Allergic gastroenteritis and colitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4326601,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "75236001",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Anorectal abscess",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4050869,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "233606009",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Atypical pneumonia",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 132736,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "5758002",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Bacteremia",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 436339,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "186435004",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Bacterial infection due to Klebsiella pneumoniae",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 435613,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "128045006",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Cellulitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 193814,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "198159006",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Chronic parametritis and pelvic cellulitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 195453,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "266081001",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Colitis, enteritis and gastroenteritis presumed infectious",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 435318,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "198655001",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Complete miscarriage with genital tract or pelvic infection",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4068969,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "204042007",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Congenital malformation of corpus callosum",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4345447,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "240394009",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Cutaneous erysipeloid",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 378143,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "45170000",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Encephalitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 441589,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "56819008",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Endocarditis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 443406,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "359804008",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Eosinophilic gastroenteritis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4098889,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "27040004",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Experimental allergic encephalomyelitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 195306,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "196731005",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Gastroduodenitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4101468,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "25374005",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Gastroenteritis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 256036,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "31920006",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Hemorrhagic varicella pneumonitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 45770836,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "98541000119101",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Herpes zoster myelitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 76034,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "43891009",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Herpetic whitlow",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 195317,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "198644001",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Incomplete miscarriage with genital tract or pelvic infection",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4231983,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "406595002",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Infection due to Mycoplasma pneumoniae",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4273378,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "64667001",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Interstitial pneumonia",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4262720,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "36046008",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Ischiorectal abscess",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 434866,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "110269000",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Late effects of viral encephalitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4027461,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "22811006",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Leukoencephalopathy",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 435785,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "7180009",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Meningitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 141663,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "60168000",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Osteomyelitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 373412,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "36292003",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Otitis externa due to Herpes zoster",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 438350,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "88860002",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Pneumocystosis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 255848,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "233604007",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Pneumonia",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 444099,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "46207001",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Pneumonitis due to acquired toxoplasmosis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 36712850,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "12571000132104",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Pneumonitis due to Herpes zoster",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 192670,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "67656006",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Portal pyemia",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 42872891,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "450886002",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Posterior reversible encephalopathy syndrome",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 433957,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "22255007",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Progressive multifocal leukoencephalopathy",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 253954,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "154283005",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Pulmonary tuberculosis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 198199,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "45816000",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Pyelonephritis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": true,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4169568,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "48872007",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Rheumatic endocarditis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 196328,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "42338000",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Salmonella gastroenteritis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 132797,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "91302008",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Sepsis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 196236,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "76571007",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Septic shock",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 195461,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "32527003",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Staphylococcal enterocolitis",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4091167,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "186203002",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Tuberculosis of lung, bacteriologically and histologically negative",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        },
+        {
+          "isExcluded": false,
+          "concept": {
+            "INVALID_REASON_CAPTION": "Valid",
+            "CONCEPT_ID": 4206579,
+            "STANDARD_CONCEPT": "S",
+            "CONCEPT_CODE": "309465005",
+            "VOCABULARY_ID": "SNOMED",
+            "CONCEPT_NAME": "Varicella-zoster virus infection",
+            "DOMAIN_ID": "Condition",
+            "STANDARD_CONCEPT_CAPTION": "Standard",
+            "CONCEPT_CLASS_ID": "Clinical Finding",
+            "INVALID_REASON": "V"
+          },
+          "includeMapped": false,
+          "includeDescendants": true
+        }
+      ]},
+      "name": "[EHDEN RA] Serious Infections ",
+      "id": 9
+    }
+  ],
+  "EndStrategy": {"DateOffset": {
+    "DateField": "StartDate",
+    "Offset": 30
+  }},
+  "cdmVersionRange": ">=5.0.0",
+  "CensoringCriteria": [],
+  "AdditionalCriteria": {
+    "CriteriaList": [
+      {
+        "RestrictVisit": false,
+        "StartWindow": {
+          "UseEventEnd": false,
+          "Start": {
+            "Days": null,
+            "Coeff": -1
+          },
+          "End": {
+            "Days": 0,
+            "Coeff": 1
+          },
+          "UseIndexEnd": false
+        },
+        "IgnoreObservationPeriod": false,
+        "EndWindow": {
+          "UseEventEnd": true,
+          "Start": {
+            "Days": 0,
+            "Coeff": -1
+          },
+          "End": {
+            "Days": null,
+            "Coeff": 1
+          },
+          "UseIndexEnd": false
+        },
+        "Criteria": {"VisitOccurrence": {
+          "OccurrenceEndDate": null,
+          "VisitLength": null,
+          "CorrelatedCriteria": null,
+          "VisitSourceConcept": null,
+          "CodesetId": 8,
+          "VisitTypeExclude": false,
+          "ProviderSpecialty": null,
+          "Gender": null,
+          "PlaceOfServiceLocation": null,
+          "PlaceOfService": null,
+          "VisitType": null,
+          "First": null,
+          "OccurrenceStartDate": null,
+          "Age": null
+        }},
+        "Occurrence": {
+          "Type": 2,
+          "IsDistinct": false,
+          "Count": 1
+        }
+      },
+      {
+        "RestrictVisit": false,
+        "StartWindow": {
+          "UseEventEnd": false,
+          "Start": {
+            "Days": 0,
+            "Coeff": -1
+          },
+          "End": {
+            "Days": 30,
+            "Coeff": 1
+          },
+          "UseIndexEnd": false
+        },
+        "IgnoreObservationPeriod": false,
+        "EndWindow": null,
+        "Criteria": {"Death": {
+          "CorrelatedCriteria": null,
+          "CodesetId": null,
+          "DeathSourceConcept": null,
+          "DeathTypeExclude": false,
+          "DeathType": null,
+          "OccurrenceStartDate": null,
+          "Gender": null,
+          "Age": null
+        }},
+        "Occurrence": {
+          "Type": 2,
+          "IsDistinct": false,
+          "Count": 1
+        }
+      }
+    ],
+    "Type": "ANY",
+    "DemographicCriteriaList": [],
+    "Groups": [],
+    "Count": null
+  },
+  "QualifiedLimit": {"Type": "All"},
+  "InclusionRules": [],
+  "PrimaryCriteria": {
+    "CriteriaList": [{"ConditionOccurrence": {
+      "OccurrenceEndDate": null,
+      "CorrelatedCriteria": null,
+      "ConditionTypeExclude": false,
+      "CodesetId": 9,
+      "ProviderSpecialty": null,
+      "Gender": null,
+      "VisitType": null,
+      "First": null,
+      "OccurrenceStartDate": null,
+      "ConditionType": null,
+      "ConditionSourceConcept": null,
+      "StopReason": null,
+      "Age": null
+    }}],
+    "PrimaryCriteriaLimit": {"Type": "All"},
+    "ObservationWindow": {
+      "PostDays": 0,
+      "PriorDays": 0
+    }
+  }
+}

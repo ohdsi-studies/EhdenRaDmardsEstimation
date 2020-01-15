@@ -1,0 +1,20 @@
+atlasId,atlasName,cohortId,name
+224,[EHDEN RA] New users of hydroxychloroquine monotherapy,224,EHDEN_RA_New_users_of_hydroxychloroquine_monotherapy
+219,[EHDEN RA] New users of methoxtrexate monotherapy,219,EHDEN_RA_New_users_of_methoxtrexate_monotherapy
+187,[EHDEN RA] Leukopenia,187,EHDEN_RA_Leukopenia
+193,[EHDEN RA] Pancytopenia,193,EHDEN_RA_Pancytopenia
+185,[EHDEN RA] Acute myocardial infarction events (in any visit),185,EHDEN_RA_Acute_myocardial_infarction_events_in_any_visit
+184,[EHDEN RA] Acute myocardial infarction events (in hospital/ER visit),184,EHDEN_RA_Acute_myocardial_infarction_events_in_hospitalER_visit
+183,[EHDEN RA] Stroke (ischemic or hemorrhagic) events (any visit),183,EHDEN_RA_Stroke_ischemic_or_hemorrhagic_events_any_visit
+182,[EHDEN RA] Stroke (ischemic or hemorrhagic) events (in hospital/ER visit),182,EHDEN_RA_Stroke_ischemic_or_hemorrhagic_events_in_hospitalER_visit
+212,[EHDEN RA] Persons with a Malignant neoplasm of leukemia 1 dx,212,EHDEN_RA_Persons_with_a_Malignant_neoplasm_of_leukemia_1_dx
+223,[EHDEN RA] Persons with a malignant neoplasm other than non-melanoma skin cancer 1 dx,223,EHDEN_RA_Persons_with_a_malignant_neoplasm_other_than_nonmelanoma_skin_cancer_1_dx
+216,[EHDEN RA] Persons with a Malignant neoplasm of lymphoma 1 dx,216,EHDEN_RA_Persons_with_a_Malignant_neoplasm_of_lymphoma_1_dx
+218,[EHDEN RA] Persons with a Malignant neoplasm of colon and rectum 1 dx,218,EHDEN_RA_Persons_with_a_Malignant_neoplasm_of_colon_and_rectum_1_dx
+201,[EHDEN RA] Persons with a Malignant neoplasm of lung 1 dx,201,EHDEN_RA_Persons_with_a_Malignant_neoplasm_of_lung_1_dx
+206,[EHDEN RA] Persons with a Malignant neoplasm of breast 1 dx,206,EHDEN_RA_Persons_with_a_Malignant_neoplasm_of_breast_1_dx
+197,[EHDEN RA] Opportunistic Infections,197,EHDEN_RA_Opportunistic_Infections
+203,[EHDEN RA] Serious Infection  events,203,EHDEN_RA_Serious_Infection__events
+253,"[EHDEN RA] Serious Infection, opportunistic infections and other infections of interest event",253,EHDEN_RA_Serious_Infection_opportunistic_infections_and_other_infections_of_interest_event
+226,[EHDEN RA] New users of leflunomide monotherapy,226,EHDEN_RA_New_users_of_leflunomide_monotherapy
+225,[EHDEN RA] New users of sulfasalazine monotherapy,225,EHDEN_RA_New_users_of_sulfasalazine_monotherapy

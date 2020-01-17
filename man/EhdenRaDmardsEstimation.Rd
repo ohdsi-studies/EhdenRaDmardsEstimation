@@ -3,7 +3,6 @@
 \docType{package}
 \name{EhdenRaDmardsEstimation}
 \alias{EhdenRaDmardsEstimation}
-\alias{EhdenRaDmardsEstimation-package}
 \title{EhdenRaDmardsEstimation}
 \description{
 EhdenRaDmardsEstimation

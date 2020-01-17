@@ -23,7 +23,7 @@ shinyUI(
                              tags$div("Procesing...",id = "loadmessage")),
             fluidRow(
               column(3,
-                     selectInput("target", "Target", unique(exposureOfInterest$exposureName)),
+                     selectInput("target", "Target", unique(exposureOfInterest$exposureName), selected = unique(exposureOfInterest$exposureName)[3]),
                      selectInput("comparator", "Comparator", unique(exposureOfInterest$exposureName), selected = unique(exposureOfInterest$exposureName)[2]),
                      selectInput("outcome", "Outcome", unique(outcomeOfInterest$outcomeName)),
                      checkboxGroupInput("database", "Data source", database$databaseId, selected = database$databaseId),

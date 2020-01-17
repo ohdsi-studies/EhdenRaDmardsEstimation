@@ -1,7 +1,9 @@
 source("DataPulls.R")
 source("PlotsAndTables.R")
 
-# shinySettings <- list(dataFolder = "c:/temp/Gowtham/data", blind = TRUE)
+#shinySettings <- list(dataFolder = "E:/jweave17/StudyResults/EhdenRaDmardsEstimation/ResultsBELGIUM/ShinyData", blind = TRUE)
+shinySettings <- list(dataFolder = "E:/jweave17/StudyResults/EhdenRaDmardsEstimation/ShinyDataAll", blind = FALSE)
+
 dataFolder <- shinySettings$dataFolder
 blind <- shinySettings$blind
 connection <- NULL
@@ -48,4 +50,16 @@ for (removePart in removeParts) {
 
 tcos <- unique(cohortMethodResult[, c("targetId", "comparatorId", "outcomeId")])
 tcos <- tcos[tcos$outcomeId %in% outcomeOfInterest$outcomeId, ]
-               
+
+outcomeOfInterest$definition <- NULL
+outcomeOfInterest <- outcomeOfInterest[!duplicated(outcomeOfInterest), ]
+
+cohortMethodAnalysis$definition <- NULL
+cohortMethodAnalysis <- cohortMethodAnalysis[!duplicated(cohortMethodAnalysis), ]
+
+
+keeps <- (cohortMethodResult$outcomeId %in% c(187, 193, 197, 203, 253) & cohortMethodResult$analysisId %in% c(7:10)) |  # infections, leukopenia, pancytopenia
+  (cohortMethodResult$outcomeId %in% c(182:185) & cohortMethodResult$analysisId %in% c(1, 2, 4, 5)) | # cardiovacular
+  (cohortMethodResult$outcomeId %in% c(212, 223, 216, 218, 201) & cohortMethodResult$analysisId %in% c(3, 6)) | # oncology
+  cohortMethodResult$outcomeId %in% negativeControlOutcome$outcomeId # controls
+cohortMethodResult <- cohortMethodResult[keeps, ]

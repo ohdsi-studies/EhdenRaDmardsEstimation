@@ -1,124 +1,72 @@
+# install dependencies
+install.packages("devtools")
+library(devtools)
+install_github("ohdsi/SqlRender")
+install_github("ohdsi/DatabaseConnector")
+install_github("ohdsi/OhdsiSharing")
+install_github("ohdsi/FeatureExtraction")
+install_github("ohdsi/CohortMethod")
+install_github("ohdsi/EmpiricalCalibration")
+install_github("ohdsi/MethodEvaluation")
+
 library(EhdenRaDmardsEstimation)
 
-options(fftempdir = "S:/FFTemp")
+# Optional: specify where the temporary files (used by the ff package) will be created:
+options(fftempdir = "S:/FFtemp")
+
+# Maximum number of cores to be used:
 maxCores <- parallel::detectCores()
-studyFolder <- "G:/StudyResults/EhdenRaDmardsEstimation"
 
-source("S:/MiscCode/SetEnvironmentVariables.R")
-connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "pdw",
-                                                                server = Sys.getenv("server"),
-                                                                user = NULL,
-                                                                password = NULL,
-                                                                port = Sys.getenv("port"))
+# Minimum cell count when exporting data:
+minCellCount <- 5
 
-mailSettings <- list(from = Sys.getenv("emailAddress"),
-                     to = c(Sys.getenv("emailAddress")),
-                     smtp = list(host.name = Sys.getenv("emailHost"), port = 25,
-                                 user.name = Sys.getenv("emailAddress"),
-                                 passwd = Sys.getenv("emailPassword"), ssl = FALSE),
-                     authenticate = FALSE,
-                     send = TRUE)
+# The folder where the study intermediate and result files will be written:
+outputFolder <- "S:/EhdenRaDmardsEstimation"
 
-# CCAE settings ----------------------------------------------------------------
-databaseId <- "CCAE"
-databaseName <- "CCAE"
-databaseDescription <- "CCAE"
-cdmDatabaseSchema <- "CDM_IBM_CCAE_V1061.dbo"
-outputFolder <- file.path(studyFolder, databaseId)
-cohortDatabaseSchema = "scratch.dbo"
-cohortTable = "bcn_ccae"
+# Details for connecting to the server:
+# See ?DatabaseConnector::createConnectionDetails for help
+connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "",
+                                                                server = "",
+                                                                user = "",
+                                                                password = "")
 
-# Optum DOD settings -----------------------------------------------------------
-databaseId <- "Optum"
-databaseName <- "Optum"
-databaseDescription <- "Optum DOD"
-cdmDatabaseSchema = "CDM_OPTUM_EXTENDED_DOD_V1064.dbo"
-outputFolder <- file.path(studyFolder, databaseId)
-cohortDatabaseSchema <- "scratch.dbo"
-cohortTable <- "bcn_optum"
+# The name of the database schema where the CDM data can be found:
+cdmDatabaseSchema <- ""
 
-# CPRD settings ----------------------------------------------------------------
-databaseId <- "CPRD"
-databaseName <- "CPRD"
-databaseDescription <- "CPRD"
-cdmDatabaseSchema = "CDM_CPRD_V1017.dbo"
-outputFolder <- file.path(studyFolder, databaseId)
-cohortDatabaseSchema <- "scratch.dbo"
-cohortTable <- "bcn_cprd"
+# The name of the database schema and table where the study-specific cohorts will be instantiated:
+cohortDatabaseSchema <- ""
+cohortTable <- ""
 
-# MDCD settings ----------------------------------------------------------------
-databaseId <- "MDCD"
-databaseName <- "MDCD"
-databaseDescription <- "MDCD"
-cdmDatabaseSchema = "CDM_IBM_MDCD_V1023.dbo"
-outputFolder <- file.path(studyFolder, databaseId)
-cohortDatabaseSchema <- "scratch.dbo"
-cohortTable <- "bcn_mdcd"
+# Some meta-information that will be used by the export function:
+databaseId <- "" # required
+databaseName <- "" # required
+databaseDescription <- ""
 
-# MDCR settings ----------------------------------------------------------------
-databaseId <- "MDCR"
-databaseName <- "MDCR"
-databaseDescription <- "MDCR"
-cdmDatabaseSchema = "CDM_IBM_MDCR_V1062.dbo"
-outputFolder <- file.path(studyFolder, databaseName)
-cohortDatabaseSchema <- "scratch.dbo"
-cohortTable <- "bcn_mdcr"
+# For Oracle: define a schema that can be used to emulate temp tables:
+oracleTempSchema <- NULL
 
-# JMDC -------------------------------------------------------------------------
-databaseId <- "JMDC"
-databaseName <- "JMDC"
-databaseDescription <- "JMDC"
-cdmDatabaseSchema = "CDM_JMDC_V1063.dbo"
-outputFolder <- file.path(studyFolder, databaseName)
-cohortDatabaseSchema <- "scratch.dbo"
-cohortTable <- "bcn_jmdc"
+execute(connectionDetails = connectionDetails,
+        cdmDatabaseSchema = cdmDatabaseSchema,
+        cohortDatabaseSchema = cohortDatabaseSchema,
+        cohortTable = cohortTable,
+        oracleTempSchema = oracleTempSchema,
+        outputFolder = outputFolder,
+        databaseId = databaseId,
+        databaseName = databaseName,
+        databaseDescription = databaseDescription,
+        onTreatmentWithBlankingPeriod = TRUE,
+        createCohorts = TRUE,
+        synthesizePositiveControls = TRUE,
+        runAnalyses = TRUE,
+        runDiagnostics = TRUE,
+        packageResults = TRUE
+        maxCores = maxCores,
+        minCellCount = minCellCount)
+```
 
-# GermanyDA --------------------------------------------------------------------
-databaseId <- "GermanyDA"
-databaseName <- "GermanyDA"
-databaseDescription <- "GermanyDA"
-cdmDatabaseSchema = "CDM_IQVIA_GERMANY_DA_V1049.dbo"
-outputFolder <- file.path(studyFolder, databaseName)
-cohortDatabaseSchema <- "scratch.dbo"
-cohortTable <- "bcn_germanyda"
-
-# FranceDA --------------------------------------------------------------------
-databaseId <- "FranceDA"
-databaseName <- "FranceDA"
-databaseDescription <- "FranceDA"
-cdmDatabaseSchema = "CDM_IQVIA_FRANCE_DA_V1047.dbo"
-outputFolder <- file.path(studyFolder, databaseName)
-cohortDatabaseSchema <- "scratch.dbo"
-cohortTable <- "bcn_franceda"
-
-# PanTher ----------------------------------------------------------------------
-databaseId <- "PanTher"
-databaseName <- "PanTher"
-databaseDescription <- "PanTher"
-cdmDatabaseSchema = "CDM_PANTHER_V1020.dbo"
-outputFolder <- file.path(studyFolder, databaseName)
-cohortDatabaseSchema <- "scratch.dbo"
-cohortTable <- "bcn_panther"
-
-# Run --------------------------------------------------------------------------
-OhdsiRTools::runAndNotify(expression = {
-        execute(connectionDetails = connectionDetails,
-                cdmDatabaseSchema = cdmDatabaseSchema,
-                cohortDatabaseSchema = cohortDatabaseSchema,
-                cohortTable = cohortTable,
-                oracleTempSchema = NULL,
-                outputFolder = outputFolder,
-                databaseId = databaseId,
-                databaseName = databaseName,
-                databaseDescription = databaseDescription,
-                createCohorts = TRUE,
-                synthesizePositiveControls = FALSE,
-                runAnalyses = TRUE,
-                runDiagnostics = TRUE,
-                packageResults = TRUE,
-                maxCores = maxCores)
-}, mailSettings = mailSettings, label = paste0("EhdenRaDmardsEstimation ", databaseId), stopOnWarning = FALSE)
-
+4. To view the results, use the Shiny app:
+  
+  ```r
 resultsZipFile <- file.path(outputFolder, "export", paste0("Results", databaseId, ".zip"))
 dataFolder <- file.path(outputFolder, "shinyData")
 prepareForEvidenceExplorer(resultsZipFile = resultsZipFile, dataFolder = dataFolder)

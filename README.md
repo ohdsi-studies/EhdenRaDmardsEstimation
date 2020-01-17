@@ -10,7 +10,7 @@ DMARDs comparative safety in RA (EHDEN Study-a-thon Barcelona 2020)
 - Study lead forums tag: **[jweave17](https://forums.ohdsi.org/u/jweave17)**
 - Study start date: **January 13, 2020**
 - Study end date: **-**
-- Protocol: [**Word file**](https://github.com/ohdsi-studies/EhdenRaDmardsEstimation/blob/master/extras/Barcelona%20studyathon%20protocol.docx)
+- Protocol: [**Word file**](https://github.com/ohdsi-studies/EhdenRaDmardsEstimation/blob/master/documents/20200117_RAPLE_EUPAS_final.docx)
 - Publications: **-**
 - Results explorer: **-**
 

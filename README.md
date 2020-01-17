@@ -105,9 +105,8 @@ How to run
 		databaseId = databaseId,
 		databaseName = databaseName,
 		databaseDescription = databaseDescription,
-		onTreatmentWithBlankingPeriod = TRUE,
 		createCohorts = TRUE,
-		synthesizePositiveControls = TRUE,
+		synthesizePositiveControls = FALSE,
 		runAnalyses = TRUE,
 		runDiagnostics = TRUE,
 		packageResults = TRUE

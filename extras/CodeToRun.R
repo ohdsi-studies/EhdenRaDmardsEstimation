@@ -54,19 +54,14 @@ execute(connectionDetails = connectionDetails,
         databaseId = databaseId,
         databaseName = databaseName,
         databaseDescription = databaseDescription,
-        onTreatmentWithBlankingPeriod = TRUE,
         createCohorts = TRUE,
-        synthesizePositiveControls = TRUE,
+        synthesizePositiveControls = FALSE,
         runAnalyses = TRUE,
         runDiagnostics = TRUE,
-        packageResults = TRUE
+        packageResults = TRUE,
         maxCores = maxCores,
         minCellCount = minCellCount)
-```
 
-4. To view the results, use the Shiny app:
-  
-  ```r
 resultsZipFile <- file.path(outputFolder, "export", paste0("Results", databaseId, ".zip"))
 dataFolder <- file.path(outputFolder, "shinyData")
 prepareForEvidenceExplorer(resultsZipFile = resultsZipFile, dataFolder = dataFolder)

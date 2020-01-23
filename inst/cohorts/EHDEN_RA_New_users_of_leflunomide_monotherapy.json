@@ -1182,7 +1182,7 @@
             "STANDARD_CONCEPT": "S",
             "CONCEPT_CODE": "83901003",
             "VOCABULARY_ID": "SNOMED",
-            "CONCEPT_NAME": "Sjögren's syndrome",
+            "CONCEPT_NAME": "SjÃ¶gren's syndrome",
             "DOMAIN_ID": "Condition",
             "STANDARD_CONCEPT_CAPTION": "Standard",
             "CONCEPT_CLASS_ID": "Clinical Finding",
@@ -1413,23 +1413,6 @@
     },
     {
       "expression": {"items": [
-        {
-          "isExcluded": false,
-          "concept": {
-            "INVALID_REASON_CAPTION": "Valid",
-            "CONCEPT_ID": 1101898,
-            "STANDARD_CONCEPT": "S",
-            "CONCEPT_CODE": "27169",
-            "VOCABULARY_ID": "RxNorm",
-            "CONCEPT_NAME": "leflunomide",
-            "DOMAIN_ID": "Drug",
-            "STANDARD_CONCEPT_CAPTION": "Standard",
-            "CONCEPT_CLASS_ID": "Ingredient",
-            "INVALID_REASON": "V"
-          },
-          "includeMapped": false,
-          "includeDescendants": true
-        },
         {
           "isExcluded": false,
           "concept": {

@@ -65,4 +65,3 @@ execute(connectionDetails = connectionDetails,
 resultsZipFile <- file.path(outputFolder, "export", paste0("Results", databaseId, ".zip"))
 dataFolder <- file.path(outputFolder, "shinyData")
 prepareForEvidenceExplorer(resultsZipFile = resultsZipFile, dataFolder = dataFolder)
-launchEvidenceExplorer(dataFolder = dataFolder, blind = TRUE, launch.browser = FALSE)

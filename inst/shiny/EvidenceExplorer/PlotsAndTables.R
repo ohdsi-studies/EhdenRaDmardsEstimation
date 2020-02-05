@@ -348,6 +348,9 @@ prepareTable1 <- function(balance,
 }
 
 plotPs <- function(ps, targetName, comparatorName) {
+  if (nrow(ps) == 0) {
+    return(NULL)
+  }
   ps <- rbind(data.frame(x = ps$preferenceScore, y = ps$targetDensity, group = targetName),
               data.frame(x = ps$preferenceScore, y = ps$comparatorDensity, group = comparatorName))
   ps$group <- factor(ps$group, levels = c(as.character(targetName), as.character(comparatorName)))

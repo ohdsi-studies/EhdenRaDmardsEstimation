@@ -93,5 +93,4 @@ cohortMethodResult$calibratedP[cohortMethodResult$toBlind == 1 | dbBlinds] <- NA
 
 cohortMethodResult$i2 <- round(cohortMethodResult$i2, 2)
 
-
-
+source("dataClean.R")

@@ -4,14 +4,8 @@
 \alias{exportResults}
 \title{Export all results to tables}
 \usage{
-exportResults(
-  outputFolder,
-  databaseId,
-  databaseName,
-  databaseDescription,
-  minCellCount = 5,
-  maxCores
-)
+exportResults(outputFolder, databaseId, databaseName, databaseDescription,
+  minCellCount = 5, maxCores)
 }
 \arguments{
 \item{outputFolder}{Name of local folder to place results; make sure to use forward slashes

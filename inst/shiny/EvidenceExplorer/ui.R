@@ -2,7 +2,7 @@ library(shiny)
 library(DT)
 
 shinyUI(
-  fluidPage(style = "width:1500px;",
+  fluidPage(style = "width:1650px;",
             titlePanel(paste("Evidence Explorer", if(blind) "***Blinded***" else "")),
             tags$head(tags$style(type = "text/css", "
              #loadmessage {
@@ -42,14 +42,14 @@ shinyUI(
                         tabPanel("Explore results",
                                 
                                  fluidRow(
-                                  column(4,
+                                  column(3,
                                          selectInput("target", "Target", unique(exposureOfInterest$exposureName)[1:3], selected = unique(exposureOfInterest$exposureName)[1], width = '100%'),
                                          selectInput("comparator", "Comparator", unique(exposureOfInterest$exposureName)[4], selected = unique(exposureOfInterest$exposureName)[4], width = '100%'),
                                          selectInput("outcome", "Outcome", unique(outcomeOfInterest$outcomeName), width = '100%'),
                                          checkboxGroupInput("database", "Data source", database$databaseId, selected = database$databaseId[15], width = '100%'),
                                          checkboxGroupInput("analysis", "Analysis", cohortMethodAnalysis$description,  selected = cohortMethodAnalysis$description[c(1, 2, 5, 6, 9)], width = '100%')
                                   ),
-                                  column(8,
+                                  column(9,
                                          dataTableOutput("mainTable"),
                                          conditionalPanel("output.rowIsSelected == true",
                                                           tabsetPanel(id = "detailsTabsetPanel",

@@ -197,3 +197,11 @@ doMetaAnalysis(studyFolder = studyFolder,
 premergeShinyDataFiles(dataFolder = file.path(studyFolder, "ShinyDataAll"),
                        newDataFolder = file.path(studyFolder, "NewShinyDataAll"))
 
+createPlotsAndTables(resultsFolder = file.path(studyFolder, "NewShinyDataAll"),
+                     reportFolder = file.path(studyFolder, "reportTest"),
+                     createCountsTable = TRUE,
+                     createCharsTable = TRUE,
+                     createEventsTables = TRUE,
+                     createForestPlots = TRUE)
+
+

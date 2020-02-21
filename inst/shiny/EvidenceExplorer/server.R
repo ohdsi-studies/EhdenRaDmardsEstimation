@@ -368,7 +368,7 @@ shinyServer(function(input, output, session) {
       return(table)
     }
   })
-
+  
   psDistPlot <- reactive({
     row <- selectedRow()
     if (is.null(row)) {

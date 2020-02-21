@@ -1,7 +1,7 @@
-source("DataPulls.R")
-source("PlotsAndTables.R")
+source("extras/getResults/DataPulls.R")
+#source("extras/getResults/PlotsAndTables.R")
 
-shinySettings <- list(dataFolder = "G:/StudyResults/EhdenRaDmardsEstimation/NewShinyDataAll", blind = FALSE)
+shinySettings <- list(dataFolder = "G:/StudyResults/EhdenRaDmardsEstimation2/NewShinyDataAll", blind = FALSE)
 
 dataFolder <- shinySettings$dataFolder
 blind <- shinySettings$blind
@@ -69,8 +69,7 @@ keeps <- ((cohortMethodResult$outcomeId %in% c(187, 193, 197, 203, 253) & cohort
 cohortMethodResult <- cohortMethodResult[keeps, ]
 
 toBlind <- readRDS(file.path(dataFolder, "to_blind.rds"))
-#toBlind <- toBlind[, c("database_id", "analysis_id", "target_id", "comparator_id")] 
-toBlind <- toBlind[, c("database_id", "target_id", "comparator_id")] 
+toBlind <- toBlind[, c("database_id", "analysis_id", "target_id", "comparator_id")] 
 toBlind$to_blind <- 1
 colnames(toBlind) <- SqlRender::snakeCaseToCamelCase(colnames(toBlind))
 
@@ -95,5 +94,3 @@ cohortMethodResult$calibratedSeLogRr[cohortMethodResult$toBlind == 1 | dbBlinds]
 cohortMethodResult$calibratedP[cohortMethodResult$toBlind == 1 | dbBlinds] <- NA
 
 cohortMethodResult$i2 <- round(cohortMethodResult$i2, 2)
-
-source("dataClean.R")

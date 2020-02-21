@@ -271,13 +271,14 @@ getCmFollowUpDist <- function(connection,
 }
 
 getCovariateBalance <- function(connection,
+                                resultsFolder,
                                 targetId,
                                 comparatorId,
                                 databaseId,
                                 analysisId,
                                 outcomeId = NULL) {
   file <- sprintf("covariate_balance_t%s_c%s_%s.rds", targetId, comparatorId, databaseId)
-  balance <- readRDS(file.path(dataFolder, file))
+  balance <- readRDS(file.path(resultsFolder, file))
   colnames(balance) <- SqlRender::snakeCaseToCamelCase(colnames(balance))
   balance <- balance[balance$analysisId == analysisId & balance$outcomeId == outcomeId, ]
   balance <- merge(balance, covariate[covariate$databaseId == databaseId & covariate$analysisId == analysisId, 

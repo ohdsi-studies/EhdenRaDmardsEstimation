@@ -2,8 +2,7 @@ library(EhdenRaDmardsEstimation)
 
 options(fftempdir = "S:/FFTemp")
 maxCores <- parallel::detectCores()
-studyFolder <- "G:/StudyResults/EhdenRaDmardsEstimation2"  # note 2
-
+studyFolder <- "G:/StudyResults/EhdenRaDmardsEstimation2"  # main results, databaseIds unchanged
 
 source("S:/MiscCode/SetEnvironmentVariables.R")
 connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "pdw",
@@ -197,11 +196,15 @@ doMetaAnalysis(studyFolder = studyFolder,
 premergeShinyDataFiles(dataFolder = file.path(studyFolder, "ShinyDataAll"),
                        newDataFolder = file.path(studyFolder, "NewShinyDataAll"))
 
-createPlotsAndTables(resultsFolder = file.path(studyFolder, "NewShinyDataAll"),
-                     reportFolder = file.path(studyFolder, "reportTest"),
-                     createCountsTable = TRUE,
-                     createCharsTable = TRUE,
-                     createEventsTables = TRUE,
-                     createForestPlots = TRUE)
+reportFolder <- "G:/StudyResults/EhdenRaDmardsEstimation2/report2"
 
-
+for (analysis in c("primary", "matchedOnTreatment", "strataItt", "matchedItt")) {
+  createManuscriptTables(reportFolder = reportFolder,
+                         analysis = analysis,
+                         createCountsTable = FALSE,
+                         createNntTable = FALSE,
+                         createCharsTables = FALSE,
+                         createEventsTables = FALSE,
+                         createForestPlots = TRUE,
+                         createDiagnosticPlots = FALSE)
+}

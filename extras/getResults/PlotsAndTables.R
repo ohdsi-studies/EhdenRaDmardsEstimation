@@ -745,20 +745,20 @@ plotLargeScatter <- function(d, xLabel) {
                          alpha = 0.5) +
     ggplot2::geom_point(size = 2, color = rgb(0, 0, 0, alpha = 0.05), alpha = alpha, shape = 16) +
     ggplot2::geom_hline(yintercept = 0) +
-    ggplot2::geom_label(x = log(0.11),
-                        y = 1,
-                        alpha = 1,
-                        hjust = "left",
-                        ggplot2::aes(label = nLabel),
-                        size = 5,
-                        data = oneRow) +
-    ggplot2::geom_label(x = log(0.11),
-                        y = 0.935,
-                        alpha = 1,
-                        hjust = "left",
-                        ggplot2::aes(label = meanLabel),
-                        size = 5,
-                        data = oneRow) +
+    # ggplot2::geom_label(x = log(0.11),
+    #                     y = 1,
+    #                     alpha = 1,
+    #                     hjust = "left",
+    #                     ggplot2::aes(label = nLabel),
+    #                     size = 5,
+    #                     data = oneRow) +
+    # ggplot2::geom_label(x = log(0.11),
+    #                     y = 0.935,
+    #                     alpha = 1,
+    #                     hjust = "left",
+    #                     ggplot2::aes(label = meanLabel),
+    #                     size = 5,
+    #                     data = oneRow) +
     ggplot2::scale_x_continuous(xLabel, limits = log(c(0.1,
                                                        10)), breaks = log(breaks), labels = breaks) +
     ggplot2::scale_y_continuous("Standard Error", limits = c(0, 1)) +
@@ -1086,6 +1086,260 @@ createRef <- function(targetIds,
   return(ref)
 }
 
+#analysisRef <- exposureRef
+createEventTable <- function(analysisRef, databaseIds, exposureOfInterest) {
+  tables <- list()
+  for (i in 1:nrow(analysisRef)) { # i = 1
+    mainResults <- getMainResults(targetId = analysisRef$targetId[i], 
+                                  comparatorIds = analysisRef$comparatorId[i], 
+                                  outcomeIds = analysisRef$outcomeId[i], 
+                                  databaseIds = databaseIds,
+                                  analysisIds = analysisRef$analysisId[i])
+    
+    tarDrops <- mainResults$databaseId %in% c("DABelgium", "DAGermany", "THIN", "PanTher", "IPCI") & mainResults$analysisId %in% c(1,4,7,9)
+    mainResults <- mainResults[!tarDrops, ]
+    metaDrops <- mainResults$databaseId == "Meta-analysis" & mainResults$i2 >= 0.4
+    mainResults <- mainResults[!metaDrops, ]
+    mainResults <- mainResults[mainResults$toBlind == 0, ]
+    mainResults <- mainResults[!is.na(mainResults$calibratedRr), ]
+    metaDbs <- unlist(strsplit(mainResults$sources[mainResults$databaseId == "Meta-analysis"], split = ", "))
+    if (length(metaDbs) == 1) {
+      mainResults <- mainResults[!mainResults$databaseId == "Meta-analysis", ]
+    }
+    mainResults$order <- match(mainResults$databaseId, databaseIds)
+    mainResults <- mainResults[order(mainResults$order), ]
+    mainResults$order <- NULL
+    #mainResults$databaseId[mainResults$databaseId %in% metaDbs] <- paste0(mainResults$databaseId[mainResults$databaseId %in% metaDbs], "*")
+    eventsTable <- prepareEventsTable(mainResults)
+    eventsTable$targetShortName <- exposureOfInterest$shortName[exposureOfInterest$exposureId == analysisRef$targetId[i]]
+    eventsTable$comparatorShortName <- exposureOfInterest$shortName[exposureOfInterest$exposureId == analysisRef$comparatorId[i]]
+    eventsTable$outcomeName <- analysisRef$outcomeName[i]
+    eventsTable$comparison <- paste(eventsTable$targetShortName, eventsTable$comparatorShortName, sep = " vs. ")
+    eventsTable <- eventsTable[, c("outcomeName",
+                                   "comparison",
+                                   "databaseId",
+                                   "targetSubjects",
+                                   "comparatorSubjects",
+                                   "targetYears",
+                                   "comparatorYears",
+                                   "targetOutcomes",
+                                   "comparatorOutcomes",
+                                   "targetIr",
+                                   "comparatorIr",
+                                   "mdrr")]
+    tables[[length(tables) + 1]] <- eventsTable
+  }
+  eventTable <- do.call(rbind, tables)
+  dbOrder <- databaseIds
+  outcomeOrder <- c("Leukopenia",
+                    "Pancytopenia",
+                    "Serious infection",
+                    "Opportunistic infection",
+                    "All infections",
+                    "MI",
+                    "Stroke",
+                    "All cancers",
+                    "Colorectal cancer",
+                    "Lymphoma",
+                    "Leukemia",
+                    "Lung cancer")
+  eventTable$dbOrder <- match(eventTable$databaseId, dbOrder)
+  eventTable$outcomeOrder <- match(eventTable$outcomeName, outcomeOrder)
+  eventTable <- eventTable[order(eventTable$outcomeOrder, eventTable$dbOrder), ]
+  eventTable$dbOrder <- NULL
+  eventTable$outcomeOrder <- NULL
+  eventTable$databaseId[eventTable$databaseId == "Meta-analysis"] <- "Summary"
+  return(eventTable)
+}
+
+plotForestLong <- function(mainResults,
+                           outcomeOfInterest,
+                           dbOrder,
+                           targetName,
+                           comparatorName,
+                           xLabel = "cHR") {
+  mainResults <- merge(mainResults, outcomeOfInterest)
+  outcomeOrder <- c("Leukopenia",
+                    "Pancytopenia",
+                    "Serious Infection",
+                    "Opportunistic Infection",
+                    "Serious, opporunistic, or other infection",
+                    "Acute myocardial infarction (any visit)",
+                    "Ischemic or hemorrhagic stroke (any visit)",
+                    "Any cancer except non-melanoma skin cancer",
+                    "Colorectal cancer",
+                    "Lymphoma",
+                    "Leukemia",
+                    "Lung cancer")
+  mainResults$dbOrder <- match(mainResults$databaseId, dbOrder)
+  mainResults$outcomeOrder <- match(mainResults$outcomeName, outcomeOrder)
+  mainResults <- mainResults[order(mainResults$outcomeOrder, mainResults$dbOrder), ]
+  mainResults$dbOrder <- NULL
+  mainResults$outcomeOrder <- NULL
+
+  meta <- mainResults$databaseId == "Meta-analysis"
+  
+  logRr <- log(mainResults$calibratedRr[!meta])
+  logLb95Ci <- log(mainResults$calibratedCi95Lb[!meta])
+  logUb95Ci <- log(mainResults$calibratedCi95Ub[!meta])
+  labels <- mainResults$databaseId[!meta]
+  outcomes <- mainResults$outcomeName[!meta]
+  
+  mLogRr <- log(mainResults$calibratedRr[meta])
+  mLogLb95Ci <- log(mainResults$calibratedCi95Lb[meta])
+  mLogUb95Ci <- log(mainResults$calibratedCi95Ub[meta])
+  mLabels <- mainResults$databaseId[meta]
+  mOutcomes <- mainResults$outcomeName[meta]
+
+  summaryLabel <- paste0("Summary (I2=", mainResults$i2[mainResults$databaseId == "Meta-analysis"], ")")
+  d1 <- data.frame(logRr = -100,
+                   logLb95Ci = -100,
+                   logUb95Ci = -100,
+                   name = "Source",
+                   outcome = "Outcome",
+                   type = "header",
+                   stringsAsFactors = FALSE)
+  d2 <- data.frame(logRr = logRr,
+                   logLb95Ci = logLb95Ci,
+                   logUb95Ci = logUb95Ci,
+                   name = labels,
+                   outcome = outcomes,
+                   type = "db",
+                   stringsAsFactors = FALSE)
+  if (length(mLogRr) > 0) {
+    d3 <- data.frame(logRr = mLogRr,
+                     logLb95Ci = mLogLb95Ci,
+                     logUb95Ci = mLogUb95Ci,
+                     name = summaryLabel,
+                     outcome = mOutcomes,
+                     type = "ma",
+                     stringsAsFactors = FALSE)
+    d <- rbind(d1, d2, d3)
+  } else {
+    d <- rbind(d1, d2)
+  }
+  
+  d$dbOrder <- match(d$name, dbOrder)
+  d$outcomeOrder <- match(d$outcome, outcomeOrder)
+  d$dbOrder[d$name == "Source"] <- 0
+  d$outcomeOrder[d$name == "Source"] <- 0
+  d$dbOrder[d$type == "ma"] <- 10
+  d <- d[order(d$outcomeOrder, d$dbOrder), ]
+  
+  d$outcome[d$outcome == "Serious, opporunistic, or other infection"] <- "Any infection" 
+  d$outcome[d$outcome == "Acute myocardial infarction (any visit)"] <- "MI"
+  d$outcome[d$outcome == "Ischemic or hemorrhagic stroke (any visit)"] <- "Stroke"
+  d$outcome[d$outcome == "Any cancer except non-melanoma skin cancer"] <- "Any cancer"
+  d$outcomeName <- paste(d$outcome, d$name)
+  outcomeNameOrder <- d$outcomeName
+  d$outcomeName <- factor(d$outcomeName, levels = rev(outcomeNameOrder))
+  d$Outcomes <- ""
+  d$Outcomes[d$outcome %in% c("Leukopenia", "Pancytopenia")] <- "Blood count disorders"
+  d$Outcomes[d$outcome %in% c("Serious Infection", "Opportunistic Infection", "Any infection")] <- "Infections"
+  d$Outcomes[d$outcome %in% c("MI", "Stroke")] <- "Cardiovascular events"
+  d$Outcomes[d$outcome %in% c("Any cancer", "Colorectal cancer", "Lymphoma", "Leukemia", "Lung cancer")] <- "Cancers"
+  d$row <- rev(1:nrow(d))
+  
+  d$lcl <- ifelse(d$logLb95Ci < log(0.175), log(0.175), d$logLb95Ci)
+  d$ucl <- ifelse(d$logUb95Ci > log(6), log(6), d$logUb95Ci)
+  d$lcl[d$type == "header"] <- -100
+  d$ucl[d$type == "header"] <- -100
+  
+  OutcomesOrder <- c("Blood count disorders", "Infections", "Cardiovascular events", "Cancers")
+  d$Outcomes <- factor(d$Outcomes, levels = OutcomesOrder)
+  
+  breaks <- c(0.175, 0.25, 0.5, 1, 2, 4, 6)
+  plotLabels <- c(0.175, 0.25, paste("0.5\nFavors", targetName), paste("1\ncHR"), paste("2\nFavors", comparatorName), 4, 6)
+  
+  labels <- paste0(formatC(exp(d$logRr),  digits = 2, format = "f"),
+                   " (",
+                   formatC(exp(d$logLb95Ci), digits = 2, format = "f"),
+                   "-",
+                   formatC(exp(d$logUb95Ci), digits = 2, format = "f"),
+                   ")")
+  labels[grep("NA", labels)] <- ""
+  labels <- data.frame(y = rep(d$row, 3),
+                       x = rep(c(-5.6, -4.2, -3), each = nrow(d)),
+                       label = c(d$outcome, as.character(d$name), labels),
+                       Outcomes = rep(d$Outcomes, 3),
+                       stringsAsFactors = FALSE)
+  labels$label[labels$x == -5.6 & duplicated(labels$label)] <- ""
+  labels$label[labels$label == "0.00 (0.00-0.00)"] <- paste(xLabel,"(95% CI)")
+  
+  if (length(d$row[d$logLb95Ci < d$lcl]) > 0) {
+    lclData <- data.frame(x = log(0.175),
+                          xend = log(0.175),
+                          y = d$row[d$logLb95Ci < d$lcl],
+                          yend = d$row[d$logLb95Ci < d$lcl])
+  } else {
+    lclData <- data.frame(x = -100, xend = -100, y = -100, yend = -100)
+  }
+  
+  if (length(d$row[d$logUb95Ci > d$ucl]) > 0) {
+    uclData <- data.frame(x = log(6),
+                          xend = log(6),
+                          y = d$row[d$logUb95Ci > d$ucl],
+                          yend = d$row[d$logUb95Ci > d$ucl])
+  } else {
+    uclData <- data.frame(x = -100, xend = -100, y = -100, yend = -100)
+  }
+  
+  plot <- ggplot2::ggplot(d, ggplot2::aes(x = logRr, y = row)) +
+    ggplot2::scale_fill_manual(values = c('#f7f7f7','#cccccc','#969696','#636363'), breaks = levels(d$Outcomes)) +
+    ggplot2::geom_rect(ggplot2::aes(xmin = -5.6, xmax = 10, ymin = row - 0.5, ymax = row + 0.5, fill = Outcomes), alpha =0.5) +
+    ggplot2::geom_vline(xintercept = log(breaks), colour = "white", lty = 1, size = 0.2) +
+    ggplot2::geom_vline(xintercept = 0, size = 0.5) +
+    ggplot2::geom_errorbarh(height = 0, ggplot2::aes(xmin = lcl, xmax = ucl)) +
+    ggplot2::geom_segment(data = lclData,
+                          ggplot2::aes(x = x, xend = xend, y = y, yend = yend),
+                          arrow = grid::arrow(angle = 30, type = "open", length = ggplot2::unit(0.075, "inches"))) +
+    ggplot2::geom_segment(data = uclData,
+                          ggplot2::aes(x = x, xend = xend, y = y, yend = yend),
+                          arrow = grid::arrow(angle = 210, type = "open", length = ggplot2::unit(0.075, "inches"))) +
+    ggplot2::geom_point(size=3, ggplot2::aes(shape = type), fill = "white", show.legend = FALSE) +
+    ggplot2::scale_shape_manual(values = c(18, 1, 23)) +
+    ggplot2::scale_x_continuous(breaks = log(breaks), labels = plotLabels) +
+    ggplot2::coord_cartesian(xlim = c(-5.6, log(5)), ylim = c(min(d$row)+0.5, max(d$row) - 0.0224*max(d$row))) +    #c(min(d$row)+1.25, max(d$row)-coordOffset))
+    ggplot2::geom_text(size = 4.5, hjust = 0, vjust = 0.5, ggplot2::aes(x = x, y = y, label = label), data = labels) +
+    ggplot2::geom_hline(ggplot2::aes(yintercept = nrow(d) - 0.5)) +
+    ggplot2::theme(panel.grid.major = ggplot2::element_blank(),
+                   panel.grid.minor = ggplot2::element_blank(),
+                   panel.background = ggplot2::element_blank(),
+                   plot.background  = ggplot2::element_blank(),
+                   legend.position = "bottom",
+                   panel.border = ggplot2::element_blank(),
+                   axis.text.y = ggplot2::element_blank(),
+                   axis.title.y = ggplot2::element_blank(),
+                   axis.title.x = ggplot2::element_blank(),
+                   axis.ticks = ggplot2::element_blank(),
+                   plot.margin = grid::unit(c(0,0,0.1,0), "lines"))
+  return(plot)
+}
+
+createPlotsLong <- function(exposureRef, databaseIds) {
+  mainResults <- getMainResults(targetIds = exposureRef$targetId, 
+                                comparatorIds = exposureRef$comparatorId, 
+                                outcomeIds = exposureRef$outcomeId, 
+                                databaseIds = databaseIds,
+                                analysisIds = exposureRef$analysisId)
+  tarDrops <- mainResults$databaseId %in% c("DABelgium", "DAGermany", "THIN", "PanTher", "IPCI") & mainResults$analysisId %in% c(1,4,7,9)
+  mainResults <- mainResults[!tarDrops, ]
+  metaDrops <- mainResults$databaseId == "Meta-analysis" & mainResults$i2 >= 0.4
+  mainResults <- mainResults[!metaDrops, ]
+  metaDbs <- unlist(strsplit(mainResults$sources[mainResults$databaseId == "Meta-analysis"], split = ", "))
+  mainResults <- mainResults[mainResults$toBlind == 0, ]
+  mainResults <- mainResults[!is.na(mainResults$calibratedRr), ]
+  mainResults$metaDbs[mainResults$databaseId == "Meta-analysis"] <- count.fields(textConnection(mainResults$sources[mainResults$databaseId == "Meta-analysis"]), sep = ",")
+  mainResults <- mainResults[is.na(mainResults$metaDbs) | mainResults$metaDbs > 1, ]
+  dbOrder <- databaseIds
+  plot <- plotForestLong(mainResults = mainResults,
+                         outcomeOfInterest = outcomeOfInterest,
+                         dbOrder = dbOrder,
+                         targetName = exposureRef$targetName[1],
+                         comparatorName = exposureRef$comparatorName[1])
+  return(plot)
+}
+
 plotForest <- function(mainResults,
                        dbOrder,
                        targetName,
@@ -1120,13 +1374,17 @@ plotForest <- function(mainResults,
                    logUb95Ci = logUb95Ci,
                    name = labels,
                    type = "db")
-  d3 <- data.frame(logRr = mLogRr,
-                   logLb95Ci = mLogLb95Ci,
-                   logUb95Ci = mLogUb95Ci,
-                   name = summaryLabel,
-                   type = "ma")
+  if (length(mLogRr) > 0) {
+    d3 <- data.frame(logRr = mLogRr,
+                     logLb95Ci = mLogLb95Ci,
+                     logUb95Ci = mLogUb95Ci,
+                     name = summaryLabel,
+                     type = "ma")
+    d <- rbind(d1, d2, d3)
+  } else {
+    d <- rbind(d1, d2)
+  }
   
-  d <- rbind(d1, d2, d3)
   d$name <- factor(d$name, levels = c(summaryLabel, rev(as.character(labels)), "Source"))
   
   breaks <- c(0.1, 0.175, 0.25, 0.5, 1, 2, 4, 6, 8)
@@ -1183,15 +1441,22 @@ plotForest <- function(mainResults,
   return(plot)
 }
 
-
 createPlots <- function(analysisRef, databaseIds) {
   plots <- list()
-  for (i in 1:nrow(analysisRef)) {
-    mainResults <- getMainResults(targetId = analysisRef$targetId[i], 
+  for (i in 1:nrow(analysisRef)) { # i = 10
+    mainResults <- getMainResults(targetIds = analysisRef$targetId[i], 
                                   comparatorIds = analysisRef$comparatorId[i], 
                                   outcomeIds = analysisRef$outcomeId[i], 
                                   databaseIds = databaseIds,
-                                  analysisIds = analysisRef$analysisId[i]) 
+                                  analysisIds = analysisRef$analysisId[i])
+    
+    tarDrops <- mainResults$databaseId %in% c("DABelgium", "DAGermany", "THIN", "PanTher", "IPCI") & mainResults$analysisId %in% c(1,4,7,9)
+    mainResults <- mainResults[!tarDrops, ]
+    metaDrops <- mainResults$databaseId == "Meta-analysis" & mainResults$i2 >= 0.4
+    mainResults <- mainResults[!metaDrops, ]
+    mainResults <- mainResults[mainResults$toBlind == 0, ]
+    mainResults <- mainResults[!is.na(mainResults$calibratedRr), ]
+    
     dbOrder <- databaseIds
     plot <- plotForest(mainResults,
                        dbOrder, 
@@ -1202,37 +1467,75 @@ createPlots <- function(analysisRef, databaseIds) {
   return(plots)
 }
 
-createTables <- function(analysisRef, databaseIds, exposureOfInterest) {
-  tables <- list()
-  for (i in 1:nrow(analysisRef)) { # i = 1
-    mainResults <- getMainResults(targetId = analysisRef$targetId[i], 
-                                  comparatorIds = analysisRef$comparatorId[i], 
-                                  outcomeIds = analysisRef$outcomeId[i], 
-                                  databaseIds = databaseIds,
-                                  analysisIds = analysisRef$analysisId[i]) 
-    metaDbs <- unlist(strsplit(mainResults$sources[mainResults$databaseId == "Meta-analysis"], split = ", "))
-    mainResults$order <- match(mainResults$databaseId, databaseIds)
-    mainResults <- mainResults[order(mainResults$order), ]
-    mainResults$order <- NULL
-    mainResults$databaseId[mainResults$databaseId %in% metaDbs] <- paste0(mainResults$databaseId[mainResults$databaseId %in% metaDbs], "*")
-    eventsTable <- prepareEventsTable(mainResults)
-    eventsTable$targetShortName <- exposureOfInterest$shortName[exposureOfInterest$exposureId == analysisRef$targetId[i]]
-    eventsTable$comparatorShortName <- exposureOfInterest$shortName[exposureOfInterest$exposureId == analysisRef$comparatorId[i]]
-    eventsTable$outcomeName <- analysisRef$outcomeName[i]
-    eventsTable$comparison <- paste(eventsTable$targetShortName, eventsTable$comparatorShortName, sep = " vs. ")
-    eventsTable <- eventsTable[, c("outcomeName",
-                                   "comparison",
-                                   "databaseId",
-                                   "targetSubjects",
-                                   "comparatorSubjects",
-                                   "targetYears",
-                                   "comparatorYears",
-                                   "targetOutcomes",
-                                   "comparatorOutcomes",
-                                   "targetIr",
-                                   "comparatorIr",
-                                   "mdrr")]
-    tables[[length(tables) + 1]] <- eventsTable
+getNnt <- function(targetIds,
+                   targetLabels,
+                   comparatorIds,
+                   comparatorLabels,
+                   databaseIds,
+                   analysisIds,
+                   outcomeIds,
+                   outcomeNames) { 
+  ref <- data.frame(targetId = targetIds,
+                    targetLabel = targetLabels,
+                    comparatorId = comparatorIds,
+                    comparatorLabel = comparatorLabels,
+                    databaseId = databaseIds,
+                    analysisId = analysisIds,
+                    stringsAsFactors = FALSE)
+  outcomeRef <- data.frame(outcomeId = outcomeIds,
+                           outcomeName = outcomeNames,
+                           stringsAsFactors = FALSE)
+  ref <- merge(ref, outcomeRef)
+  nntRows <- data.frame()
+  for (i in 1:nrow(ref)) {
+    mainResults <- getMainResults(connection = connection,
+                                  targetIds = ref$targetId[i],
+                                  comparatorIds = ref$comparatorId[i],
+                                  outcomeIds = ref$outcomeId[i],
+                                  databaseIds = ref$databaseId[i], 
+                                  analysisIds = ref$analysisId[i])
+    cHr <- mainResults$calibratedRr
+    cHr95CiLb <- mainResults$calibratedCi95Lb
+    cHr95CiUb <- mainResults$calibratedCi95Ub
+    km <- getKaplanMeier(connection = connection,
+                         targetId = ref$targetId[i],
+                         comparatorId = ref$comparatorId[i],
+                         outcomeId = ref$outcomeId[i],
+                         databaseId = ref$databaseId[i],
+                         analysisId = ref$analysisId[i])
+    getFollowUp <- function(time) {
+      if (time == "Median") {
+        followUp <- median(km$time)
+        followUp <- km$time[which.min(abs(km$time - medianFollowUp))]
+        return(followUp)
+      } else {
+        followUp <- max(km$time)
+        return(followUp)
+      }
+    }
+    followUpRows <- data.frame()
+    for (time in c("Median", "End")) {
+      followUp <- getFollowUp(time)
+      survTarget <- km$targetSurvival[km$time == followUp]
+      survComparator <- km$comparatorSurvival[km$time == followUp]
+      nnt <- round(1 / (survTarget ^ cHr - survComparator), 2)
+      nnt95CiLb <- round(1 / (survTarget ^ cHr95CiLb - survComparator), 2)
+      nnt95CiUb <- round(1 / (survTarget ^ cHr95CiUb - survComparator), 2)
+      followUpRow <- data.frame(outcomeName = ref$outcomeName[i],
+                                database = ref$databaseId[i],
+                                targetLabel = ref$targetLabel[i],
+                                comparatorLabel = ref$comparatorLabel[i],
+                                followUp = time,
+                                days = followUp,
+                                cHr = round(cHr, 2),
+                                cHr95CiLb = round(cHr95CiLb, 2),
+                                cHr95CiUb = round(cHr95CiUb, 2),
+                                nnt = nnt,
+                                nnt95CiLb = nnt95CiLb,
+                                nnt95CiUb = nnt95CiUb)
+      followUpRows <- rbind(followUpRows, followUpRow)
+    }
+    nntRows <- rbind(nntRows, followUpRows)
   }
-  return(tables)
+  return(nntRows)
 }

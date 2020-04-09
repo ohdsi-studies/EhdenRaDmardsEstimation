@@ -1,7 +1,7 @@
 DMARDs comparative safety in RA (EHDEN Study-a-thon Barcelona 2020)
 =================
 
-<img src="https://img.shields.io/badge/Study%20Status-Design%20Finalized-brightgreen.svg" alt="Study Status: Design Finalized">
+<img src="https://img.shields.io/badge/Study%20Status-Results%20Available-yellow.svg" alt="Study Status: Results Available">
 
 - Analytics use case(s): **Population-Level Estimation**
 - Study type: **Clinical Application**
@@ -12,7 +12,7 @@ DMARDs comparative safety in RA (EHDEN Study-a-thon Barcelona 2020)
 - Study end date: **-**
 - Protocol: [**Word file**](https://github.com/ohdsi-studies/EhdenRaDmardsEstimation/blob/master/documents/20200117_RAPLE_EUPAS_final.docx)
 - Publications: **-**
-- Results explorer: **-**
+- Results explorer: **[Shiny app](https://data.ohdsi.org/EhdenRaDmardsEstimation/)**
 
 This study aims to estimate the population level-effects of conventional synthetic disease-modifying antirheumatic drugs among patients with rheumatoid arthritis.
 

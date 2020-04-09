@@ -2,7 +2,7 @@
 
 export(assessCovarBalanaceAndPrevalence)
 export(createCohorts)
-export(createPlotsAndTables)
+export(createManuscriptTables)
 export(doMetaAnalysis)
 export(execute)
 export(exportResults)

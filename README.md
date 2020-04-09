@@ -6,8 +6,8 @@ DMARDs comparative safety in RA (EHDEN Study-a-thon Barcelona 2020)
 - Analytics use case(s): **Population-Level Estimation**
 - Study type: **Clinical Application**
 - Tags: **EHDEN**
-- Study lead: **Jamie Weaver**
-- Study lead forums tag: **[jweave17](https://forums.ohdsi.org/u/jweave17)**
+- Study lead: **Jamie Weaver, Ed Burn**
+- Study lead forums tag: **[jweave17](https://forums.ohdsi.org/u/jweave17), [edburn](https://forums.ohdsi.org/u/edburn)**
 - Study start date: **January 13, 2020**
 - Study end date: **-**
 - Protocol: [**Word file**](https://github.com/ohdsi-studies/EhdenRaDmardsEstimation/blob/master/documents/20200117_RAPLE_EUPAS_final.docx)

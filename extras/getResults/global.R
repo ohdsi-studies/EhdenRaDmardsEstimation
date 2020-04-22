@@ -1,9 +1,7 @@
 source("extras/getResults/DataPulls.R")
 source("extras/getResults/PlotsAndTables.R")
 
-#shinySettings <- list(dataFolder = "G:/StudyResults/EhdenRaDmardsEstimation2/NewShinyDataAll", blind = FALSE)
-shinySettings <- list(dataFolder = "S:/Git/GitHub/ohdsi-studies/EhdenRaDmardsEstimation/inst/shiny/EhdenRaDmardsEstimation/data", blind = FALSE)
-
+shinySettings <- list(dataFolder = "G:/StudyResults/EhdenRaDmardsEstimation2/NewShinyDataAll2", blind = FALSE)
 
 dataFolder <- shinySettings$dataFolder
 blind <- shinySettings$blind
@@ -42,10 +40,14 @@ loadFile <- function(file, removePart) {
       newData$databaseId[newData$databaseId == "GERMANY"] <- "DAGermany"
       newData$databaseId[newData$databaseId == "IPCI-HI-LARIOUS-RA"] <- "ICPI"
       newData$databaseId[newData$databaseId == "LPDFRANCE"] <- "LPDFrance"
+      newData$databaseId[newData$databaseId == "Optum"] <- "ClinFormatics"
+      newData$databaseId[newData$databaseId == "PanTher"] <- "OptumEHR"
     }
     if ("sources" %in% colnames(newData)) {
       newData$sources <- gsub("Amb_EMR", "AmbEMR", newData$sources)
       newData$sources <- gsub("GERMANY", "DAGermany", newData$sources)
+      newData$sources <- gsub("Optum", "ClinFormatics", newData$sources)
+      newData$sources <- gsub("PanTher", "OptumEHR", newData$sources)
     }
     if (exists(camelCaseName, envir = .GlobalEnv)) {
       existingData <- get(camelCaseName, envir = .GlobalEnv)

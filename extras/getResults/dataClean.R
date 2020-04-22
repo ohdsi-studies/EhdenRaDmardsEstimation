@@ -24,7 +24,8 @@ colnames(toBlind) <- SqlRender::snakeCaseToCamelCase(colnames(toBlind))
 cohortMethodResult <- merge(cohortMethodResult, toBlind, all.x = TRUE)
 cohortMethodResult$toBlind[is.na(cohortMethodResult$toBlind)] <- 0
 
-dbBlinds <- cohortMethodResult$databaseId %in% c("DABelgium", "DAGermany", "THIN", "PanTher", "IPCI") & cohortMethodResult$analysisId %in% c(1,4,7,9)
+dbBlinds <- (cohortMethodResult$databaseId %in% c("DABelgium", "DAGermany", "THIN", "OptumEHR", "IPCI") & cohortMethodResult$analysisId %in% c(1,4,7,9)) |
+  (cohortMethodResult$databaseId %in% c("AmbEMR", "THIN") & cohortMethodResult$outcomeId == 203)
 
 cohortMethodResult$rr[cohortMethodResult$toBlind == 1 | dbBlinds] <- NA
 cohortMethodResult$ci95Ub[cohortMethodResult$toBlind == 1 | dbBlinds] <- NA
@@ -44,7 +45,7 @@ cohortMethodResult$comparatorDays[dbBlinds] <- NA
 cohortMethodResult$targetOutcomes[dbBlinds] <- NA
 cohortMethodResult$comparatorOutcomes[dbBlinds] <- NA
 
-dbBlinds <- cmFollowUpDist$databaseId %in% c("DABelgium", "DAGermany", "THIN", "PanTher", "IPCI") & cmFollowUpDist$analysisId %in% c(1,4,7,9)
+dbBlinds <- cmFollowUpDist$databaseId %in% c("DABelgium", "DAGermany", "THIN", "OptumEHR", "IPCI") & cmFollowUpDist$analysisId %in% c(1,4,7,9)
 cmFollowUpDist$targetMinDays[dbBlinds] <- NA
 cmFollowUpDist$targetP10Days[dbBlinds] <- NA
 cmFollowUpDist$targetP25Days[dbBlinds] <- NA
@@ -99,7 +100,8 @@ outcomeOfInterest$order <- match(outcomeOfInterest$outcomeName, c("Leukopenia",
 outcomeOfInterest <- outcomeOfInterest[order(outcomeOfInterest$order), ]
 outcomeOfInterest$order <- NULL
 
-database$order <- match(database$databaseId, c(database$databaseId[database$databaseId != "Meta-analysis"], "Meta-analysis"))
+dbOrder <- c("AmbEMR", "CCAE", "ClinFormatics", "DABelgium", "DAGermany", "EstonianHIS", "ICPI", "JMDC", "LPDFrance", "MDCD", "MDCR", "OptumEHR", "SIDIAP", "THIN", "Meta-analysis")
+database$order <- match(database$databaseId, dbOrder)
 database <- database[order(database$order), ]
 database$order <- NULL
 

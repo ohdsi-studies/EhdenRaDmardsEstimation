@@ -56,6 +56,7 @@ premergeShinyDataFiles <- function(dataFolder,
       colnames(newData) <- SqlRender::snakeCaseToCamelCase(colnames(newData))
       if (exists(camelCaseName, envir = .GlobalEnv)) {
         existingData <- get(camelCaseName, envir = .GlobalEnv)
+        newData <- newData[names(existingData)]
         newData <- rbind(existingData, newData)
         newData <- unique(newData)
       }

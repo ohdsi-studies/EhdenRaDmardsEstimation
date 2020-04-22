@@ -24,7 +24,41 @@ createManuscriptTables <- function(reportFolder,
                                    createForestPlots = FALSE,
                                    createDiagnosticPlots = FALSE) { 
   
-  # reportFolder <- "G:/StudyResults/EhdenRaDmardsEstimation2/report2"
+  # reportFolder <- "G:/StudyResults/EhdenRaDmardsEstimation2/report3"
+  
+  library(magrittr)
+  
+  if (!file.exists(reportFolder)) {
+    dir.create(reportFolder)
+  }
+  
+  # analysis <- "primary"
+  if (analysis == "primary") { # stratafied, on-treatment
+    analysisIds <- c(7, 7, 1, 3)
+    analysisName <- "primary analysis"
+  }
+  if (analysis == "matchedOnTreatment") {
+    analysisIds <- c(9, 9, 4)
+    analysisName <- "PS matched on-treatment"
+  }
+  if (analysis == "strataItt") {
+    analysisIds <- c(8, 8, 2)
+    analysisName <- "PS stratified intent-to-treat"
+  }
+  if (analysis == "matchedItt") {
+    analysisIds <- c(10, 10, 5, 6)
+    analysisName <- "PS matched intent-to-treat"
+  }
+  
+  source("extras/getResults/global.R")
+  source("extras/getResults/dataClean.R")
+  source("extras/getResults/PlotsAndTables.R")
+  databaseIds <- c("AmbEMR", "CCAE", "ClinFormatics", "DAGermany", "MDCR", "OptumEHR", "SIDIAP", "THIN", "Meta-analysis")
+  
+  exposureOfInterest$shortName[exposureOfInterest$exposureId == 219] <- "MTX"
+  exposureOfInterest$shortName[exposureOfInterest$exposureId == 224] <- "HCQ"
+  exposureOfInterest$shortName[exposureOfInterest$exposureId == 225] <- "SSZ"
+  exposureOfInterest$shortName[exposureOfInterest$exposureId == 226] <- "LEF"
   
   # counts table ---------------------------------------------------------------
   if (createCountsTable) {
@@ -61,41 +95,7 @@ createManuscriptTables <- function(reportFolder,
                   outcomeNames = c("All infections", "Serious infections"))
     write.csv(nnt, file.path(reportFolder, "numberNeededToTreat.csv"), row.names = FALSE)
   }
-  
-  # analysis <- "primary"
-  if (analysis == "primary") { # stratafied, on-treatment
-    analysisIds <- c(7, 7, 1, 3)
-    analysisName <- "primary analysis"
-  }
-  if (analysis == "matchedOnTreatment") {
-    analysisIds <- c(9, 9, 4)
-    analysisName <- "PS matched on-treatment"
-  }
-  if (analysis == "strataItt") {
-    analysisIds <- c(8, 8, 2)
-    analysisName <- "PS stratified intent-to-treat"
-  }
-  if (analysis == "matchedItt") {
-    analysisIds <- c(10, 10, 5, 6)
-    analysisName <- "PS matched intent-to-treat"
-  }
-  
-  library(magrittr)
-  
-  if (!file.exists(reportFolder)) {
-    dir.create(reportFolder)
-  }
-  
-  source("extras/getResults/global.R")
-  source("extras/getResults/dataClean.R")
-  source("extras/getResults/PlotsAndTables.R")
-  databaseIds <- c("AmbEMR", "CCAE", "DAGermany", "MDCR", "Optum", "PanTher", "SIDIAP", "THIN", "Meta-analysis")
-  
-  exposureOfInterest$shortName[exposureOfInterest$exposureId == 219] <- "MTX"
-  exposureOfInterest$shortName[exposureOfInterest$exposureId == 224] <- "HCQ"
-  exposureOfInterest$shortName[exposureOfInterest$exposureId == 225] <- "SSZ"
-  exposureOfInterest$shortName[exposureOfInterest$exposureId == 226] <- "LEF"
-  
+
   # chars table ----------------------------------------------------------------
   if (createCharsTables) { 
     charsFolder <- file.path(reportFolder, "chars")
@@ -250,8 +250,8 @@ createManuscriptTables <- function(reportFolder,
     
     # cancer outcome/analyses
     if (analysis %in% c("primary", "matchedItt")) {
-      outcomeNames <- c("All cancers", "Leukemia", "Lymphoma", "Colorectal cancer", "Lung cancer")
-      outcomeIds <- c(223, 212, 216, 218, 201)
+      outcomeNames <- c("All cancers", "Leukemia", "Lymphoma", "Colorectal cancer")
+      outcomeIds <- c(223, 212, 216, 218)
       analysisNames <- analysisName
       ref4 <- createRef(targetIds,
                         targetNames,
@@ -377,8 +377,8 @@ createManuscriptTables <- function(reportFolder,
     
     # cancer outcome/analyses
     if (analysis %in% c("primary", "matchedItt")) {
-      outcomeNames <- c("All cancers", "Leukemia", "Lymphoma", "Colorectal cancer", "Lung cancer")
-      outcomeIds <- c(223, 212, 216, 218, 201)
+      outcomeNames <- c("All cancers", "Leukemia", "Lymphoma", "Colorectal cancer")
+      outcomeIds <- c(223, 212, 216, 218)
       analysisNames <- analysisName
       ref4 <- createRef(targetIds,
                         targetNames,

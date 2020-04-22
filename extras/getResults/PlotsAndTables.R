@@ -1,82 +1,3 @@
-createTitle <- function(tcoDbs) {
-  tcoDbs$targetName <- exposures$exposureName[match(tcoDbs$targetId, exposures$exposureId)]
-  tcoDbs$comparatorName <- exposures$exposureName[match(tcoDbs$comparatorId, exposures$exposureId)]
-  tcoDbs$outcomeName <- outcomes$outcomeName[match(tcoDbs$outcomeId, outcomes$outcomeId)]
-  tcoDbs$indicationId <- exposures$indicationId[match(tcoDbs$targetId, exposures$exposureId)]
-
-  titles <- paste(tcoDbs$outcomeName,
-                  "risk in new-users of",
-                  uncapitalize(tcoDbs$targetName),
-                  "versus",
-                  uncapitalize(tcoDbs$comparatorName),
-                  "for",
-                  uncapitalize(tcoDbs$indicationId),
-                  "in the",
-                  tcoDbs$databaseId,
-                  "database")
-  return(titles)
-}
-
-createAuthors <- function() {
-  authors <- paste0(
-    "Martijn J. Schuemie", ", ",
-    "Patrick B. Ryan", ", ",
-    "Seng Chan You", ", ",
-    "Nicole Pratt", ", ",
-    "David Madigan", ", ",
-    "George Hripcsak", " and ",
-    "Marc A. Suchard"
-  )
-}
-
-
-
-
-createAbstract <- function(tcoDb) {
-  
-  targetName <- uncapitalize(exposures$exposureName[match(tcoDb$targetId, exposures$exposureId)])
-  comparatorName <- uncapitalize(exposures$exposureName[match(tcoDb$comparatorId, exposures$exposureId)])
-  outcomeName <- uncapitalize(outcomes$outcomeName[match(tcoDb$outcomeId, outcomes$outcomeId)])
-  indicationId <- uncapitalize(exposures$indicationId[match(tcoDb$targetId, exposures$exposureId)])
-  
-  results <- getMainResults(connection,
-                            targetIds = tcoDb$targetId,
-                            comparatorIds = tcoDb$comparatorId,
-                            outcomeIds = tcoDb$outcomeId,
-                            databaseIds = tcoDb$databaseId)
-  
-  studyPeriod <- getStudyPeriod(connection = connection,
-                                targetId = tcoDb$targetId,
-                                comparatorId = tcoDb$comparatorId,
-                                databaseId = tcoDb$databaseId)  
-  
-  writeAbstract(outcomeName, targetName, comparatorName, tcoDb$databaseId, studyPeriod, results)
-}
-
-writeAbstract <- function(outcomeName,
-                           targetName,
-                           comparatorName,
-                           databaseId,
-                           studyPeriod,
-                           mainResults) {
-  
-  minYear <- substr(studyPeriod$minDate, 1, 4)
-  maxYear <- substr(studyPeriod$maxDate, 1, 4)
-  
-  abstract <- paste0(
-    "We conduct a large-scale study on the incidence of ", outcomeName, " among new users of ", targetName, " and ", comparatorName, " from ", minYear, " to ", maxYear, " in the ", databaseId, " database.  ",
-    "Outcomes of interest are estimates of the hazard ratio (HR) for incident events between comparable new users under on-treatment and intent-to-treat risk window assumptions.  ",
-    "Secondary analyses entertain possible clinically relevant subgroup interaction with the HR.  ",
-    "We identify ", mainResults[1, "targetSubjects"], " ", targetName, " and ", mainResults[1, "comparatorSubjects"], " ", comparatorName, " patients for the on-treatment design, totaling ", round(mainResults[1, "targetDays"] / 365.24), " and ", round(mainResults[1, "comparatorDays"] / 365.24), " patient-years of observation, and ", mainResults[1, "targetOutcomes"], " and ", mainResults[1, "comparatorOutcomes"], " events respectively.  ",
-    "We control for measured confounding using propensity score trimming and stratification or matching based on an expansive propensity score model that includes all measured patient features before treatment initiation.  ",
-    "We account for unmeasured confounding using negative and positive controls to estimate and adjust for residual systematic bias in the study design and data source, providing calibrated confidence intervals and p-values.  ",
-    "In terms of ", outcomeName, ", ", targetName, " has a ", judgeHazardRatio(mainResults[1, "calibratedCi95Lb"], mainResults[1, "calibratedCi95Ub"]), 
-    " risk as compared to ", comparatorName, " [HR: ", prettyHr(mainResults[1, "calibratedRr"]), ", 95% confidence interval (CI) ", 
-    prettyHr(mainResults[1, "calibratedCi95Lb"]), " - ", prettyHr(mainResults[1, "calibratedCi95Ub"]), "]."
-  )
-
-  abstract
-}
 
 prepareFollowUpDistTable <- function(followUpDist) {
   targetRow <- data.frame(Cohort = "Target",
@@ -1096,7 +1017,7 @@ createEventTable <- function(analysisRef, databaseIds, exposureOfInterest) {
                                   databaseIds = databaseIds,
                                   analysisIds = analysisRef$analysisId[i])
     
-    tarDrops <- mainResults$databaseId %in% c("DABelgium", "DAGermany", "THIN", "PanTher", "IPCI") & mainResults$analysisId %in% c(1,4,7,9)
+    tarDrops <- mainResults$databaseId %in% c("DABelgium", "DAGermany", "THIN", "OptumEHR", "IPCI") & mainResults$analysisId %in% c(1,4,7,9)
     mainResults <- mainResults[!tarDrops, ]
     metaDrops <- mainResults$databaseId == "Meta-analysis" & mainResults$i2 >= 0.4
     mainResults <- mainResults[!metaDrops, ]
@@ -1322,7 +1243,7 @@ createPlotsLong <- function(exposureRef, databaseIds) {
                                 outcomeIds = exposureRef$outcomeId, 
                                 databaseIds = databaseIds,
                                 analysisIds = exposureRef$analysisId)
-  tarDrops <- mainResults$databaseId %in% c("DABelgium", "DAGermany", "THIN", "PanTher", "IPCI") & mainResults$analysisId %in% c(1,4,7,9)
+  tarDrops <- mainResults$databaseId %in% c("DABelgium", "DAGermany", "THIN", "OptumEHR", "IPCI") & mainResults$analysisId %in% c(1,4,7,9)
   mainResults <- mainResults[!tarDrops, ]
   metaDrops <- mainResults$databaseId == "Meta-analysis" & mainResults$i2 >= 0.4
   mainResults <- mainResults[!metaDrops, ]
@@ -1450,7 +1371,7 @@ createPlots <- function(analysisRef, databaseIds) {
                                   databaseIds = databaseIds,
                                   analysisIds = analysisRef$analysisId[i])
     
-    tarDrops <- mainResults$databaseId %in% c("DABelgium", "DAGermany", "THIN", "PanTher", "IPCI") & mainResults$analysisId %in% c(1,4,7,9)
+    tarDrops <- mainResults$databaseId %in% c("DABelgium", "DAGermany", "THIN", "OptumEHR", "IPCI") & mainResults$analysisId %in% c(1,4,7,9)
     mainResults <- mainResults[!tarDrops, ]
     metaDrops <- mainResults$databaseId == "Meta-analysis" & mainResults$i2 >= 0.4
     mainResults <- mainResults[!metaDrops, ]
@@ -1487,7 +1408,7 @@ getNnt <- function(targetIds,
                            stringsAsFactors = FALSE)
   ref <- merge(ref, outcomeRef)
   nntRows <- data.frame()
-  for (i in 1:nrow(ref)) {
+  for (i in 1:nrow(ref)) {  # i = 1
     mainResults <- getMainResults(connection = connection,
                                   targetIds = ref$targetId[i],
                                   comparatorIds = ref$comparatorId[i],
@@ -1505,7 +1426,7 @@ getNnt <- function(targetIds,
                          analysisId = ref$analysisId[i])
     getFollowUp <- function(time) {
       if (time == "Median") {
-        followUp <- median(km$time)
+        medianFollowUp <- median(km$time)
         followUp <- km$time[which.min(abs(km$time - medianFollowUp))]
         return(followUp)
       } else {

@@ -188,23 +188,25 @@ doMetaAnalysis(studyFolder = studyFolder,
                                  file.path(studyFolder, "JMDC"),
                                  file.path(studyFolder, "LPDFRANCE"),
                                  file.path(studyFolder, "IPCI-HI-LARIOUS-RA")), 
-               maOutputFolder = file.path(studyFolder, "MetaAnalysis"),
+               maOutputFolder = file.path(studyFolder, "MetaAnalysis2"),
                maxCores = maxCores)
 
 # move meta-analysis shiny files to shinyDataAll folder
 
-premergeShinyDataFiles(dataFolder = file.path(studyFolder, "ShinyDataAll"),
-                       newDataFolder = file.path(studyFolder, "NewShinyDataAll"))
+premergeShinyDataFiles(dataFolder = file.path(studyFolder, "ShinyDataAll2"),
+                       newDataFolder = file.path(studyFolder, "NewShinyDataAll2"))
 
-reportFolder <- "G:/StudyResults/EhdenRaDmardsEstimation2/report2"
+renameShinyFileNames(dataFolder = file.path(studyFolder, "NewShinyDataAll2"))
+
+reportFolder <- "G:/StudyResults/EhdenRaDmardsEstimation2/report3"
 
 for (analysis in c("primary", "matchedOnTreatment", "strataItt", "matchedItt")) {
   createManuscriptTables(reportFolder = reportFolder,
                          analysis = analysis,
-                         createCountsTable = FALSE,
+                         createCountsTable = TRUE,
                          createNntTable = FALSE,
                          createCharsTables = FALSE,
                          createEventsTables = FALSE,
-                         createForestPlots = TRUE,
+                         createForestPlots = FALSE,
                          createDiagnosticPlots = FALSE)
 }

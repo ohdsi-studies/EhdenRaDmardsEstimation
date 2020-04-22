@@ -48,17 +48,20 @@ doMetaAnalysis <- function(studyFolder,
   allResults <- allResults[keeps, ]
   
   # blind estimates that don't pass covariate balance rule
-  toBlind <- read.csv(file.path(studyFolder, "toBlind.csv"))
-  toBlind <- toBlind[, -c(4, 6)]
+  toBlind <- read.csv(file.path(studyFolder, "toBlind_on_app.csv"))
+  toBlind$target_name <- NULL
+  toBlind$comparator_name <- NULL
   toBlind$to_blind <- 1
+  toBlind$database_id <- as.character(toBlind$database_id)
+  toBlind$database_id[toBlind$database_id == "ohdsi"] <- "EstonianHIS"
   
   allResults <- merge(allResults, toBlind, all.x = TRUE)
   allResults$to_blind[is.na(allResults$to_blind)] <- 0
   balBlinds <- allResults$to_blind == 1
   allResults$to_blind <- NULL
   
-  # blind databases with bad on-treatment tar data
-  dbBlinds <- allResults$database_id %in% c("BELGIUM", "GERMANY", "THIN", "PanTher", "IPCI-HI-LARIOUS-RA") & allResults$analysis_id %in% c(1,4,7,9)
+  dbBlinds <- (allResults$database_id %in% c("BELGIUM", "GERMANY", "THIN", "PanTher", "IPCI-HI-LARIOUS-RA") & allResults$analysis_id %in% c(1,4,7,9)) | # bad on-treatment tar data
+    (allResults$database_id %in% c("Amb_EMR", "THIN") & allResults$outcome_id == 203) # no IP/death data for serious infection outcome
   
   allResults$rr[balBlinds | dbBlinds] <- NA
   allResults$ci_95_lb[balBlinds | dbBlinds] <- NA
@@ -107,7 +110,7 @@ computeGroupMetaAnalysis <- function(group,
                                      shinyDataFolder,
                                      allControls) {
   
-  # group <- groups[["224 219 1"]]
+  # group <- groups[["224 219 3"]]
   analysisId <- group$analysis_id[1]
   targetId <- group$target_id[1]
   comparatorId <- group$comparator_id[1]
@@ -166,7 +169,7 @@ computeGroupMetaAnalysis <- function(group,
 }
 
 computeSingleMetaAnalysis <- function(outcomeGroup) {
-  # outcomeGroup <- outcomeGroups[[2]]
+  # outcomeGroup <- outcomeGroups[[6]]
   maRow <- outcomeGroup[1, ]
   outcomeGroup <- outcomeGroup[!is.na(outcomeGroup$se_log_rr), ] # drops rows with zero counts
   
